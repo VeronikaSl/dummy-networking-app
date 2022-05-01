@@ -1,0 +1,36 @@
+<div class="home" *ngFor="let post of posts">
+    <div class="post">
+        <!--HEADER-->
+        <div class="post-header">
+            <div>
+                <img class="post-header-image" src="/assets/images/duck.jpg" alt="image">
+            </div>
+            <div class="post-header-text">
+                {{ post.author }}
+            </div>
+        </div>
+        <!--BODY-->
+        <div class="post-body">
+            {{ post.text }}
+        </div>
+        <!--FOOTER-->
+        <div class="post-footer">
+            <button mat-icon-button color="warn" aria-label="Example icon button with a heart icon">
+                <mat-icon>favorite</mat-icon>
+            </button>
+            <button mat-button (click)="showComments(post.id)">Show comments</button>
+        </div>
+        <!--COMMENTS-->
+        <div *ngIf="shouldCommentsBeShown(post.id)" class="post-comments">
+            <mat-divider></mat-divider>
+            <div class="post-comment">
+                <div>
+                    <img class="post-header-image" src="/assets/images/duck.jpg" alt="image">
+                </div>
+                <div class="post-comment-text">
+                    Comment text
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
