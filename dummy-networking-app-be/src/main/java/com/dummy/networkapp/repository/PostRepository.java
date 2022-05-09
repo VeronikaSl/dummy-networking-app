@@ -1,5 +1,6 @@
-package com.dummy.networkapp;
+package com.dummy.networkapp.repository;
 
+import com.dummy.networkapp.domain.Post;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

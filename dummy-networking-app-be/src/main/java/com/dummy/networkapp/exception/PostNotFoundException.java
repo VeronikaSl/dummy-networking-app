@@ -1,4 +1,4 @@
-package com.dummy.networkapp;
+package com.dummy.networkapp.exception;
 
 public class PostNotFoundException extends RuntimeException {
 

@@ -1,5 +1,8 @@
-package com.dummy.networkapp;
+package com.dummy.networkapp.controller;
 
+import com.dummy.networkapp.exception.PostNotFoundException;
+import com.dummy.networkapp.repository.PostRepository;
+import com.dummy.networkapp.domain.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/posts")
 public class PostController {
 
+    //TODO: use Service instead Repository
 	@Autowired
 	private PostRepository postRepository;
 	
@@ -26,6 +30,7 @@ public class PostController {
 	
 	@PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    // TODO: Use PostDto instead Post
     public Post create(@RequestBody Post post) {
         return postRepository.save(post);
     }
