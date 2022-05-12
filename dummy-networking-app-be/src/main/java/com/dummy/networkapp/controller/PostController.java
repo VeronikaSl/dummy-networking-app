@@ -1,11 +1,7 @@
 package com.dummy.networkapp.controller;
 
-import com.dummy.networkapp.exception.PostNotFoundException;
-import com.dummy.networkapp.repository.PostRepository;
-import com.dummy.networkapp.service.PostService;
-import com.dummy.networkapp.converter.PostConverter;
-import com.dummy.networkapp.domain.Post;
-import com.dummy.networkapp.dto.PostDto;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,6 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dummy.networkapp.converter.PostConverter;
+import com.dummy.networkapp.domain.Post;
+import com.dummy.networkapp.dto.PostDto;
+import com.dummy.networkapp.service.PostService;
+
 @RestController
 @RequestMapping("/posts")
 public class PostController {
@@ -29,8 +30,20 @@ public class PostController {
 	private PostConverter postConverter;
 	
 	@GetMapping
-    public Iterable findAllPosts() {
-        return postService.findAll();
+    public List<PostDto> findAllPosts() {
+        List<Post> posts = postService.findAllPosts();
+        return posts.stream()
+                .map(postConverter::convert)
+                .collect(Collectors.toList());
+    }
+	
+	//TODO: @Veronika: I guess that's a bad mapping implementation, it seems to break the rules. How would be the right way?
+	@GetMapping("/{id}/answers")
+    public List<PostDto> findAnswersForPost(@PathVariable Long id) {
+		List<Post> posts = (List<Post>) postService.findAnswersToPostId(id);
+        return posts.stream()
+          .map(postConverter::convert)
+          .collect(Collectors.toList());
     }
 	
 	@PostMapping
@@ -38,20 +51,20 @@ public class PostController {
     //TODO: @Veronika: don't know if I am using the converter right or in the right place (could be PostService as well?), so tell me ;)
     public PostDto createPost(@RequestBody PostDto post) {
         return postConverter.convert(
-        		postService.save(
+        		postService.savePost(
         				postConverter.convert(post)
         		));
     }
 	
 	@GetMapping("/{id}")
     public PostDto findOnePost(@PathVariable Long id) {
-        return postConverter.convert(postService.getById(id));
+        return postConverter.convert(postService.getPostById(id));
     }
 
     @DeleteMapping("/{id}")
     public void deletePost(@PathVariable Long id) {
-    	postService.getById(id);
-    	postService.deleteById(id);
+    	postService.getPostById(id);
+    	postService.deletePostById(id);
     }
 
     @PutMapping("/{id}")
@@ -59,11 +72,12 @@ public class PostController {
         if (post.getId() != id) {
          
         }
-        postService.getById(id);
+        postService.getPostById(id);
         return postConverter.convert(
-        		postService.save(
+        		postService.savePost(
         				postConverter.convert(post)
         		));
     }
+
 
 }
