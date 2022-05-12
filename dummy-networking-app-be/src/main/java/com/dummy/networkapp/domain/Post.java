@@ -60,59 +60,12 @@ public class Post {
 		this.message = message;
 	}
 
-//	public Post getReferencePost() {
-//		return referencePost;
-//	}
-//
-//	public void setReferencePost(Post referencePost) {
-//		this.referencePost = referencePost;
-//	}
-//
-//	public List<Post> getAnswers() {
-//		return answers;
-//	}
-//
-//	public void setAnswers(List<Post> answers) {
-//		this.answers = answers;
-//	}
+	private Post(Long id, String user, String message, Long refPostId, int likes) {
+		this.id = id;
+		this.user = user;
+		this.message = message;
+		this.refPostId = refPostId;
+		this.likes = likes;
+	}
 
-//	public Long getId() {
-//		return id;
-//	}
-//
-//	public void setId(Long id) {
-//		this.id = id;
-//	}
-//
-//	public String getUser() {
-//		return user;
-//	}
-//
-//	public void setUser(String user) {
-//		this.user = user;
-//	}
-//
-//	public String getMessage() {
-//		return message;
-//	}
-//
-//	public void setMessage(String message) {
-//		this.message = message;
-//	}
-//
-//	public Long getRefPostId() {
-//		return refPostId;
-//	}
-//
-//	public void setRefPostId(Long refPostId) {
-//		this.refPostId = refPostId;
-//	}
-//
-//	public int getLikes() {
-//		return likes;
-//	}
-//
-//	public void setLikes(int likes) {
-//		this.likes = likes;
-//	}
 }

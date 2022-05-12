@@ -2,7 +2,11 @@ package com.dummy.networkapp.controller;
 
 import com.dummy.networkapp.exception.PostNotFoundException;
 import com.dummy.networkapp.repository.PostRepository;
+import com.dummy.networkapp.service.PostService;
+import com.dummy.networkapp.converter.PostConverter;
 import com.dummy.networkapp.domain.Post;
+import com.dummy.networkapp.dto.PostDto;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,43 +23,47 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/posts")
 public class PostController {
 
-    //TODO: use Service instead Repository
 	@Autowired
-	private PostRepository postRepository;
+	private PostService postService;
+	@Autowired
+	private PostConverter postConverter;
 	
 	@GetMapping
-    public Iterable findAll() {
-        return postRepository.findAll();
+    public Iterable findAllPosts() {
+        return postService.findAll();
     }
 	
 	@PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    // TODO: Use PostDto instead Post
-    public Post create(@RequestBody Post post) {
-        return postRepository.save(post);
+    //TODO: @Veronika: don't know if I am using the converter right or in the right place (could be PostService as well?), so tell me ;)
+    public PostDto createPost(@RequestBody PostDto post) {
+        return postConverter.convert(
+        		postService.save(
+        				postConverter.convert(post)
+        		));
     }
 	
 	@GetMapping("/{id}")
-    public Post findOne(@PathVariable Long id) {
-        return postRepository.findById(id)
-          .orElseThrow(PostNotFoundException::new);
+    public PostDto findOnePost(@PathVariable Long id) {
+        return postConverter.convert(postService.getById(id));
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-    	postRepository.findById(id)
-          .orElseThrow(PostNotFoundException::new);
-    	postRepository.deleteById(id);
+    public void deletePost(@PathVariable Long id) {
+    	postService.getById(id);
+    	postService.deleteById(id);
     }
 
     @PutMapping("/{id}")
-    public Post updateBook(@RequestBody Post post, @PathVariable Long id) {
+    public PostDto updatePost(@RequestBody PostDto post, @PathVariable Long id) {
         if (post.getId() != id) {
          
         }
-        postRepository.findById(id)
-          .orElseThrow(PostNotFoundException::new);
-        return postRepository.save(post);
+        postService.getById(id);
+        return postConverter.convert(
+        		postService.save(
+        				postConverter.convert(post)
+        		));
     }
 
 }
