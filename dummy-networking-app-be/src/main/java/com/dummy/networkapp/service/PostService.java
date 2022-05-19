@@ -32,7 +32,7 @@ public class PostService {
 	}
 	
 	public List<Post> findAnswersToPostId(Long id) {
-		return postRepository.findByRefId(id);
+		return postRepository.findByRefPostId(id);
 	}
 
 }

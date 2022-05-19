@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,7 +41,7 @@ public class PostController {
 	//TODO: @Veronika: I guess that's a bad mapping implementation, it seems to break the rules. How would be the right way?
 	@GetMapping("/{id}/answers")
     public List<PostDto> findAnswersForPost(@PathVariable Long id) {
-		List<Post> posts = (List<Post>) postService.findAnswersToPostId(id);
+		List<Post> posts = postService.findAnswersToPostId(id);
         return posts.stream()
           .map(postConverter::convert)
           .collect(Collectors.toList());
@@ -57,21 +58,28 @@ public class PostController {
     }
 	
 	@GetMapping("/{id}")
-    public PostDto findOnePost(@PathVariable Long id) {
-        return postConverter.convert(postService.getPostById(id));
+    // https://www.baeldung.com/spring-response-entity
+    public ResponseEntity<PostDto> findOnePost(@PathVariable Long id) {
+	    //return new
+        PostDto postDto = postConverter.convert(postService.getPostById(id));
+        return new ResponseEntity<>(postDto, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
+    //
     public void deletePost(@PathVariable Long id) {
+	    // TODO: @Daniel why we need here getPostById(id)?
     	postService.getPostById(id);
     	postService.deletePostById(id);
     }
 
+    // ID is not needed
     @PutMapping("/{id}")
     public PostDto updatePost(@RequestBody PostDto post, @PathVariable Long id) {
-        if (post.getId() != id) {
-         
-        }
+//        if (post.getId() != id) {
+//
+//        }
+        // TODO: @Daniel why we need here getPostById(id)?
         postService.getPostById(id);
         return postConverter.convert(
         		postService.savePost(

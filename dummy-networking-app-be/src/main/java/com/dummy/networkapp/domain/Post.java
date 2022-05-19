@@ -7,15 +7,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Table(name = "posts")
 @Getter
 @Setter
 @Builder
+// TODO: @Daniel, I have added 2 more cool Lombok annotations;)
+@AllArgsConstructor
+@NoArgsConstructor
 public class Post {
 	
 	@Id
@@ -35,21 +36,9 @@ public class Post {
 	@Column(name = "likes")
 	private int likes;
 	
-	public Post() {
-		
-	}
-	
 	public Post(String user, String message) {
 		this.user = user;
 		this.message = message;
-	}
-
-	private Post(Long id, String user, String message, Long refPostId, int likes) {
-		this.id = id;
-		this.user = user;
-		this.message = message;
-		this.refPostId = refPostId;
-		this.likes = likes;
 	}
 
 }

@@ -11,7 +11,9 @@ import com.dummy.networkapp.domain.Post;
 
 @Repository
 public interface PostRepository extends CrudRepository<Post, Long>{
-	
-	@Query("select p from Post p where p.refPostId = ?1")
-	List<Post> findByRefId(Long id);
+
+	// TODO: @Daniel it is pure practice to use native SQL Queries. The Spring Data Jpa query method naming should be
+	// used when possible https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.query-methods.details
+	//@Query("select p from Post p where p.refPostId = ?1")
+	List<Post> findByRefPostId(Long id);
 }
