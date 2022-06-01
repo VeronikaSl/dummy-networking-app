@@ -21,19 +21,22 @@ import lombok.Setter;
 @NoArgsConstructor
 @Table(name = "users")
 public class User {
+
+	// @ManyToMany To UserGroup
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column
 	Long id;
 	
-	@Column
-	String user;
+	@Column(name="user_name")
+	String userName;
 	
 	@Column
 	String email;
 	
+	// What is infotext?
 	@Column
-	String infotext;
+	String selfIntroduction;
 	
 }

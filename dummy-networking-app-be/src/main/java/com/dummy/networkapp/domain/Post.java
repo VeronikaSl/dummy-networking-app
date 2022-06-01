@@ -1,11 +1,6 @@
 package com.dummy.networkapp.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -39,6 +34,8 @@ public class Post {
 	
 	@Column(name = "likes")
 	private int likes;
+
+	// @Enumerated Enum PostTopic Verbindung
 	
 	public Post(String user, String message) {
 		this.user = user;
