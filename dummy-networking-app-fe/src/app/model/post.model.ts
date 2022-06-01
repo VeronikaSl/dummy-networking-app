@@ -1,5 +1,14 @@
 export interface Post {
     id: string;
-    text: string;
-    author: string;
+    message: string;
+    user: string;
+    likes ?: number;
+    refPostId: string;
+    answers: Post[]
+}
+
+export interface SavePost {
+    message: string;
+    user: string;
+    refPostId: string;
 }
