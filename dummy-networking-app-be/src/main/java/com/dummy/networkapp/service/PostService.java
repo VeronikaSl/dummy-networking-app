@@ -9,6 +9,10 @@ import com.dummy.networkapp.domain.Post;
 import com.dummy.networkapp.exception.PostNotFoundException;
 import com.dummy.networkapp.repository.PostRepository;
 
+//TODO: add error for "tree post"
+//TODO: emoticon converter 
+//TODO: DB
+
 @Service
 public class PostService {
 	

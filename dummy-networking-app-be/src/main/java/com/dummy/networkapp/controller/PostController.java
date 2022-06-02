@@ -21,6 +21,7 @@ import com.dummy.networkapp.domain.Post;
 import com.dummy.networkapp.dto.PostDto;
 import com.dummy.networkapp.service.PostService;
 
+
 @RestController
 @RequestMapping("/posts")
 public class PostController {
