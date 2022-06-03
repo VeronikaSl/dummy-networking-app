@@ -1,5 +1,9 @@
 package com.dummy.networkapp.dto;
 
+import java.util.List;
+
+import com.dummy.networkapp.domain.Group;
+
 import lombok.Builder;
 import lombok.Data;
 
@@ -11,5 +15,9 @@ public class UserDto {
 	
 	public String email;
 	
-	public String infotext;
+	public String selfIntroduction;
+	
+	public List<PostDto> allUserPosts;
+	
+	public List<GroupDto> groups;
 }

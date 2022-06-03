@@ -2,5 +2,8 @@ package com.dummy.networkapp.domain;
 
 public enum PostTopic {
     LIFESTYLE,
-    SPORT
+    SPORT,
+    NEWS,
+    FUN,
+    SCIENCE
 }

@@ -17,10 +17,14 @@ import com.dummy.networkapp.repository.PostRepository;
 public class PostService {
 	
 	@Autowired
+	private EmoticonConverter emoticonConverter;
+	
+	@Autowired
     private PostRepository postRepository;
 
     public Post getPostById(Long id) {
-        return postRepository.findById(id).orElseThrow(PostNotFoundException::new);
+        Post post = postRepository.findById(id).orElseThrow(PostNotFoundException::new);
+        return post;
     }
 
 	public List<Post> findAllPosts() {

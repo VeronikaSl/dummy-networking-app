@@ -24,7 +24,11 @@ public class Post {
 	private Long id;
 	
 	@Column(name = "user")
-	private String user;
+	private String userName;
+	
+	@ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH })
+	@JoinColumn(name = "username")
+	private User user;
 	
 	@Column(name = "message")
 	private String message;
@@ -35,10 +39,12 @@ public class Post {
 	@Column(name = "likes")
 	private int likes;
 
-	// @Enumerated Enum PostTopic Verbindung
+	@Enumerated(EnumType.STRING)
+	@Column(name = "topic")
+	private PostTopic postTopic;
 	
-	public Post(String user, String message) {
-		this.user = user;
+	public Post(String userName, String message) {
+		this.userName = userName;
 		this.message = message;
 	}
 

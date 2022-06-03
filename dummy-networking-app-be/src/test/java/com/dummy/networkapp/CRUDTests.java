@@ -41,7 +41,7 @@ public class CRUDTests {
 	private PostDto createMessage(String message) {
 		PostDto postDto = PostDto.builder()
 				.message(message)
-				.user("Daniel").build();
+				.userName("Daniel").build();
 		return postDto;
 	}
 	

@@ -8,7 +8,8 @@ import lombok.Data;
 public class PostDto {
 
 	private Long id;
-	private String user;
+	private String userName;
+	private UserDto user;
 	private String message;
 	private Long refPostId;
 	private int likes;

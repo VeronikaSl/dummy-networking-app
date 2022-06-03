@@ -1,10 +1,11 @@
-package com.dummy.networkapp.domain;
+package com.dummy.networkapp.service;
 
 import java.util.HashMap;
 import java.util.Map;
 
-//TODO: @Veronika: I have no idea where to place this converter so I left it alone for now. 
-// A test is there too, but at the moment I lacking ideas how to test it really hard
+import org.springframework.stereotype.Component;
+
+@Component
 public class EmoticonConverter {
 
 		private Map<String, String> emoticons = new HashMap<String, String>();
