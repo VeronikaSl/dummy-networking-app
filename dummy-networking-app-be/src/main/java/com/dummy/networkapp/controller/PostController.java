@@ -61,7 +61,6 @@ public class PostController {
 	@GetMapping("/{id}")
     // https://www.baeldung.com/spring-response-entity
     public ResponseEntity<PostDto> findOnePost(@PathVariable Long id) {
-	    //return new
         PostDto postDto = postConverter.convert(postService.getPostById(id));
         return new ResponseEntity<>(postDto, HttpStatus.OK);
     }

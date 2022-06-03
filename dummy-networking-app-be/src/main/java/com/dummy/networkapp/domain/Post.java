@@ -13,7 +13,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-// TODO: @Daniel, I have added 2 more cool Lombok annotations;)
 @AllArgsConstructor
 @NoArgsConstructor
 public class Post {
@@ -23,11 +22,9 @@ public class Post {
 	@Column(name = "id")
 	private Long id;
 	
-	@Column(name = "user")
-	private String userName;
-	
+	//TODO: @Veronika: converted "user" to "user_id" because Spring refused to join via String. Is there a method to join via String?
 	@ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH })
-	@JoinColumn(name = "username")
+	@JoinColumn(name = "user_id")
 	private User user;
 	
 	@Column(name = "message")
@@ -39,13 +36,9 @@ public class Post {
 	@Column(name = "likes")
 	private int likes;
 
-	@Enumerated(EnumType.STRING)
+	@Enumerated(EnumType.ORDINAL)
 	@Column(name = "topic")
 	private PostTopic postTopic;
 	
-	public Post(String userName, String message) {
-		this.userName = userName;
-		this.message = message;
-	}
 
 }

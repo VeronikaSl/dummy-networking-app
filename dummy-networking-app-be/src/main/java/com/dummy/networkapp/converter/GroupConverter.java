@@ -13,24 +13,25 @@ import lombok.Builder;
 @Component
 public class GroupConverter {
 
-	@Autowired
-	private UserConverter userConverter;
+//TODO: @Veronika: if I uncomment this, I will get a Circular Dependencies error. What is the correct way to solve this?
+//	@Autowired
+//	private UserConverter userConverter;
 	
 	public Group convert(GroupDto group) {
 		return Group.builder()
 				.groupName(group.getName())
-				.users(group.getUsers().stream()
-						.map(userConverter::convert)
-						.collect(Collectors.toList()))
+//				.users(group.getUsers().stream()
+//						.map(userConverter::convert)
+//						.collect(Collectors.toList()))
 				.build();
 	}
 	
 	public GroupDto convert(Group group) {
 		return GroupDto.builder()
 				.name(group.getGroupName())
-				.users(group.getUsers().stream()
-						.map(userConverter::convert)
-						.collect(Collectors.toList()))
+//				.users(group.getUsers().stream()
+//						.map(userConverter::convert)
+//						.collect(Collectors.toList()))
 				.build();
 	}
 }

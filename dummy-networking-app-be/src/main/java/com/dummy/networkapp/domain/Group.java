@@ -40,8 +40,8 @@ public class Group {
 	@ManyToMany(fetch = FetchType.LAZY,
 			cascade = { CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH })
 	@JoinTable(name = "join_group_user",
-			joinColumns = @JoinColumn(name = "user_id"),
-			inverseJoinColumns = @JoinColumn(name = "group_id"))
+			joinColumns = @JoinColumn(name = "group_id"),
+			inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private List<User> users;
 	
 }

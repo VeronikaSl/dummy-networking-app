@@ -50,14 +50,14 @@ public class User {
 	private String selfIntroduction;
 	
 	@OneToMany(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH })
-	@JoinColumn(name = "username")
+	@JoinColumn(name = "user_id")
 	private List<Post> allUserPosts;
 	
 	@ManyToMany(fetch = FetchType.LAZY,
 			cascade = { CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH })
 	@JoinTable(name = "join_group_user",
-			joinColumns = @JoinColumn(name = "group_id"),
-			inverseJoinColumns = @JoinColumn(name = "user_id"))
+			joinColumns = @JoinColumn(name = "user_id"),
+			inverseJoinColumns = @JoinColumn(name = "group_id"))
 	private List<Group> groups;
 	
 }

@@ -15,22 +15,22 @@ public class PostConverter {
     public Post convert(PostDto post) {
         return Post.builder()
         		.id(post.getId())
-                .userName(post.getUserName())
                 .user(userConverter.convert(post.getUser()))
                 .message(post.getMessage())
                 .refPostId(post.getRefPostId())
                 .likes(post.getLikes())
+                .postTopic(post.getPostTopic())
                 .build();
     }
 
     public PostDto convert(Post post) {
         return PostDto.builder()
         		.id(post.getId())
-                .userName(post.getUserName())
                 .user(userConverter.convert(post.getUser()))
                 .message(post.getMessage())
                 .refPostId(post.getRefPostId())
                 .likes(post.getLikes())
+                .postTopic(post.getPostTopic())
                 .build();
     }
 }
