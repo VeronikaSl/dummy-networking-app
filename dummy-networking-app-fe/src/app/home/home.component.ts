@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Post } from '../model/post.model';
+import { PostService } from '../service/post.service';
 
 @Component({
   selector: 'app-home',
@@ -10,15 +11,15 @@ export class HomeComponent implements OnInit {
 
   showCommentsArray = [] as ShowComments[];
   posts = [] as Post[];
+  postsToBeShown = [] as Post[];
+  newComment = "";
 
-  constructor() { 
-    const post1 = {id: '1', text: 'Post 1 text', author: 'Duck 1'} as Post
-    const post2 = {id: '2', text: 'Post 2 text', author: 'Duck 2'} as Post
-    const post3 = {id: '3', text: 'Post 3 text', author: 'Duck 3'} as Post
-    this.posts.push(post1);
-    this.posts.push(post2);
-    this.posts.push(post3);
-    this.posts.forEach(p => this.showCommentsArray.push({id: p.id, showComments: false }));
+  constructor(private postService: PostService) {
+    postService.getPosts().subscribe(data => {
+      this.posts = data.filter(p => p.refPostId === null || p.refPostId === undefined);
+      this.posts.forEach(p => this.showCommentsArray.push({ id: p.id, showComments: false, comments: [] as Post[] }));
+    }
+    );
   }
 
   ngOnInit(): void {
@@ -27,6 +28,15 @@ export class HomeComponent implements OnInit {
   showComments(id: string) {
     const index = this.showCommentsArray.findIndex(sc => sc.id === id);
     this.showCommentsArray[index].showComments = !this.showCommentsArray[index].showComments;
+    this.postService.getComments(id).subscribe(data => {
+      const postIndex = this.posts.findIndex(pi => pi.id = id);
+      this.posts[postIndex].answers = data;
+    }
+    );
+  }
+
+  saveComment(postRefId: string, user: string) {
+      this.postService.saveComment({message: this.newComment, user: user, refPostId: postRefId});
   }
 
 
@@ -40,4 +50,5 @@ export class HomeComponent implements OnInit {
 interface ShowComments {
   id: string;
   showComments: boolean
+  comments: Post[]
 }

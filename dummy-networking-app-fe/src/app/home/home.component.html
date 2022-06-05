@@ -6,12 +6,12 @@
                 <img class="post-header-image" src="/assets/images/duck.jpg" alt="image">
             </div>
             <div class="post-header-text">
-                {{ post.author }}
+                {{ post.user }}
             </div>
         </div>
         <!--BODY-->
         <div class="post-body">
-            {{ post.text }}
+            {{ post.message }}
         </div>
         <!--FOOTER-->
         <div class="post-footer">
@@ -20,15 +20,22 @@
             </button>
             <button mat-button (click)="showComments(post.id)">Show comments</button>
         </div>
+        <mat-form-field class="comment-input" appearance="fill">
+            <mat-label>Leave a comment</mat-label>
+            <textarea matInput [(ngModel)]="newComment" name="commentValue"></textarea>
+            <div class="comment-button">
+                <button mat-raised-button color="primary" (click)="saveComment(post.id, post.user)">Save</button>
+            </div>
+        </mat-form-field>
         <!--COMMENTS-->
         <div *ngIf="shouldCommentsBeShown(post.id)" class="post-comments">
             <mat-divider></mat-divider>
-            <div class="post-comment">
+            <div class="post-comment" *ngFor="let comment of post.answers">
                 <div>
                     <img class="post-header-image" src="/assets/images/duck.jpg" alt="image">
                 </div>
                 <div class="post-comment-text">
-                    Comment text
+                    {{ comment.message }}
                 </div>
             </div>
         </div>

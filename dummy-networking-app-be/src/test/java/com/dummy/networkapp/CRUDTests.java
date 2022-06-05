@@ -3,10 +3,13 @@ package com.dummy.networkapp;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 
 import com.dummy.networkapp.converter.UserConverter;
 import com.dummy.networkapp.domain.PostTopic;
+import com.dummy.networkapp.domain.User;
 import com.dummy.networkapp.dto.PostDto;
 import com.dummy.networkapp.dto.UserDto;
 import com.dummy.networkapp.service.UserService;
@@ -15,9 +18,16 @@ import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
+@SpringBootTest
 public class CRUDTests {
 
 	private static final String API_ROOT = "http://localhost:8080/posts";
+	
+	@Autowired
+	private UserService userService;
+	
+	@Autowired
+	private UserConverter userConverter;
 	
 	@Test
     public void getAllPosts() {
@@ -43,14 +53,11 @@ public class CRUDTests {
 	}
 
 	private PostDto createMessage(String message) {
-		UserDto user = UserDto.builder()
-				.user("Daniel")
-				.email("danielq@test.de")
-				.selfIntroduction("Dummyuser Entity")
-				.build();
+		User user = userService.getUserById(1L);
+		UserDto userDto = userConverter.convert(user);
 		PostDto postDto = PostDto.builder()
 				.message(message)
-				.user(user)
+				.user(userDto)
 				.postTopic(PostTopic.FUN)
 				.build();
 		return postDto;
